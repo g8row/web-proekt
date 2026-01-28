@@ -17,9 +17,9 @@ CREATE TABLE IF NOT EXISTS system_settings (
 );
 
 -- Default Admin (password: admin123)
--- Hash: $2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi
+-- Hash: $2y$12$kP1I8nYZ9jaml04oHZLPDu8vJ2uieTYYFSXIF4YJ8qlQBhKuk9kOi
 INSERT IGNORE INTO users (username, password, full_name, role, green_cert_valid) 
-VALUES ('admin', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'System Administrator', 'admin', 1);
+VALUES ('admin', '$2y$12$kP1I8nYZ9jaml04oHZLPDu8vJ2uieTYYFSXIF4YJ8qlQBhKuk9kOi', 'System Administrator', 'admin', 1);
 
 -- Default Traffic Mode: green, yellow, red
 INSERT IGNORE INTO system_settings (setting_key, setting_value) VALUES ('traffic_mode', 'green');
@@ -31,5 +31,15 @@ CREATE TABLE IF NOT EXISTS schedule (
     start_time TIME NOT NULL,
     end_time TIME NOT NULL,
     room VARCHAR(20) NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS user_blocks (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL,
+    reason VARCHAR(100) DEFAULT 'Vacation',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );

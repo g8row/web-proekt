@@ -39,6 +39,20 @@ if (!$user) {
     exit;
 }
 
+// 1.5 Check for Active Vacation/Block
+$today = date('Y-m-d');
+$blockStmt = $conn->prepare("SELECT * FROM user_blocks WHERE user_id = ? AND start_date <= ? AND end_date >= ?");
+$blockStmt->bind_param("iss", $user['id'], $today, $today);
+$blockStmt->execute();
+$blockResult = $blockStmt->get_result();
+
+if ($blockResult->num_rows > 0) {
+    $block = $blockResult->fetch_assoc();
+    $response['message'] = "Access Blocked: " . $block['reason'] . " (until " . $block['end_date'] . ")";
+    echo json_encode($response);
+    exit;
+}
+
 // 2. Check System Mode
 $res = $conn->query("SELECT setting_value FROM system_settings WHERE setting_key='traffic_mode'");
 $mode = $res->num_rows > 0 ? $res->fetch_assoc()['setting_value'] : 'green';

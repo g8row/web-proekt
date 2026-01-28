@@ -14,6 +14,7 @@ body {
     padding: 0;
     background-color: var(--bg-color);
     color: var(--text-color);
+    line-height: 1.6;
 }
 
 header {
@@ -23,11 +24,18 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
+    /* Allow wrapping on mobile */
 }
 
 header h1 {
     margin: 0;
     font-size: 1.5rem;
+    flex: 1 1 auto;
+}
+
+nav {
+    margin-top: 0.5rem;
 }
 
 nav a {
@@ -35,6 +43,9 @@ nav a {
     text-decoration: none;
     margin-left: 1rem;
     font-weight: bold;
+    display: inline-block;
+    /* Better tap targets */
+    padding: 5px;
 }
 
 nav a:hover {
@@ -42,7 +53,8 @@ nav a:hover {
 }
 
 main {
-    padding: 2rem;
+    padding: 1rem;
+    /* Reduced padding on mobile */
     max-width: 1200px;
     margin: 0 auto;
 }
@@ -51,8 +63,10 @@ main {
     background: var(--white);
     padding: 1.5rem;
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     margin-bottom: 2rem;
+    overflow-x: auto;
+    /* For tables */
 }
 
 h2 {
@@ -71,6 +85,7 @@ h2 {
     border: none;
     cursor: pointer;
     font-size: 1rem;
+    transition: background 0.3s;
 }
 
 .btn:hover {
@@ -87,11 +102,14 @@ h2 {
     font-weight: bold;
 }
 
-.form-group input, .form-group select {
+.form-group input,
+.form-group select {
     width: 100%;
     padding: 0.5rem;
     border: 1px solid #ccc;
     border-radius: 4px;
+    box-sizing: border-box;
+    /* Fix width issues */
 }
 
 table {
@@ -100,7 +118,8 @@ table {
     margin-top: 1rem;
 }
 
-table th, table td {
+table th,
+table td {
     border: 1px solid #ddd;
     padding: 0.75rem;
     text-align: left;
@@ -108,4 +127,40 @@ table th, table td {
 
 table th {
     background-color: #eee;
+}
+
+/* Mobile Media Queries */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    nav {
+        margin-top: 1rem;
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    nav a {
+        margin-left: 0;
+        margin-right: 1rem;
+        background: rgba(255, 255, 255, 0.1);
+        /* Subtle button look for touch */
+        border-radius: 4px;
+        padding: 5px 10px;
+    }
+
+    .calendar-grid {
+        display: flex;
+        /* Stack days vertically */
+        flex-direction: column;
+    }
+
+    .day-column {
+        min-height: auto;
+        margin-bottom: 1rem;
+    }
 }

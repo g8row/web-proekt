@@ -2,8 +2,8 @@
 // config.php
 // Database configuration
 define('DB_HOST', 'localhost');
-define('DB_USER', 'root');
-define('DB_PASS', ''); // Default XAMPP/MAMP password often empty
+define('DB_USER', 'parking_user'); // updated
+define('DB_PASS', 'parking_pass'); // updated
 define('DB_NAME', 'fmi_parking');
 
 // Attempt connection to create DB if not exists (for setup convenience) or connect to it
